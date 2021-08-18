@@ -23,5 +23,10 @@
     "brace-style": ["error", "1tbs"],
     "space-before-blocks": ["error", "always"],
     "keyword-spacing": ["error", { "before": true }]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }
