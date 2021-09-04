@@ -41,17 +41,6 @@
     "eslint": "npx eslint src/**/*.{ts,tsx}",
     "prettier": "npx prettier --write src/**/*.{ts,tsx}"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "src/**/*.{ts,tsx}": [
-      "prettier --write",
-      "git add"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
