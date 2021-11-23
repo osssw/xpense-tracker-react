@@ -22,7 +22,8 @@
     "max-len": ["error", { "code": 80, "ignoreComments": true }],
     "brace-style": ["error", "1tbs"],
     "space-before-blocks": ["error", "always"],
-    "keyword-spacing": ["error", { "before": true }]
+    "keyword-spacing": ["error", { "before": true }],
+    "react/prop-types": 0
   },
   "settings": {
     "react": {
