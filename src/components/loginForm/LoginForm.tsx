@@ -1,7 +1,7 @@
 import React from "react";
 import Stack from "@mui/material/Stack";
 import { Button, Paper, TextField } from "@mui/material";
-import { AuthContext } from "../../provider/AuthProvider";
+import { AuthContext } from "../../provider/auth";
 import { useNavigate } from "react-router-dom";
 import "./loginForm.scss";
 

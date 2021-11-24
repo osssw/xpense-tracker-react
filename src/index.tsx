@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import App from "./app";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 
 import "./index.scss";
-import AuthProvider from "./provider/AuthProvider";
+import AuthProvider from "./provider/auth";
 
 ReactDOM.render(
   <React.StrictMode>

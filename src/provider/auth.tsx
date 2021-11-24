@@ -1,13 +1,13 @@
 import React from "react";
 import { login } from "../api/login";
-import { saveToken } from "../service/utils";
+import { getToken, saveToken } from "../service/utils";
 
 export const AuthContext = React.createContext<AuthProvider>(
   {} as AuthProvider
 );
 
 interface AuthProvider {
-  isAuthorized: boolean;
+  isAuthorized: () => boolean;
   loginUser: (userData: UserData) => Promise<void>;
 }
 
@@ -17,13 +17,14 @@ export type UserData = {
 };
 
 const AuthProvider: React.FunctionComponent = ({ children }) => {
-  const [isAuthorized, setAuthorized] = React.useState<boolean>(false);
-
   const loginUser = async (userData: UserData) => {
     const response = await login(userData);
     const data = response.data;
     saveToken(data.session.accessToken);
-    setAuthorized(true);
+  };
+
+  const isAuthorized = () => {
+    return Boolean(getToken());
   };
 
   return (

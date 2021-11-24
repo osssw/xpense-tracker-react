@@ -3,5 +3,5 @@ export const saveToken = (token: string) => {
 };
 
 export const getToken = () => {
-  sessionStorage.getItem("token");
+  return sessionStorage.getItem("token");
 };

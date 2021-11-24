@@ -1,5 +1,5 @@
 import axios from "axios";
-import { UserData } from "../provider/AuthProvider";
+import { UserData } from "../provider/auth";
 import { apiUrl } from "./api";
 
 export type Session = {
