@@ -1,7 +1,7 @@
 import React from "react";
 import Stack from "@mui/material/Stack";
-import { Button, Paper, TextField } from "@mui/material";
-import { AuthContext } from "../../provider/auth";
+import { Button, LinearProgress, Paper, TextField } from "@mui/material";
+import { AuthContext } from "../../provider/Auth";
 import { useNavigate } from "react-router-dom";
 import "./loginForm.scss";
 
@@ -11,6 +11,7 @@ const LoginForm: React.FunctionComponent = () => {
 
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
+  const [isLoading, setLoading] = React.useState<boolean>(false);
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -24,8 +25,14 @@ const LoginForm: React.FunctionComponent = () => {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
-    await loginUser({ email, password });
-    navigate("/profile");
+    setLoading(true);
+    try {
+      await loginUser({ email, password });
+      navigate("/profile");
+    } catch (error) {
+      console.error(error);
+    }
+    setLoading(false);
   };
 
   return (
@@ -43,13 +50,17 @@ const LoginForm: React.FunctionComponent = () => {
           value={password}
           placeholder="Password"
         />
-        <Button
-          variant="contained"
-          onClick={handleFormSubmit}
-          className="login-form-container__submit-button"
-        >
-          Click
-        </Button>
+        {isLoading ? (
+          <LinearProgress />
+        ) : (
+          <Button
+            variant="contained"
+            onClick={handleFormSubmit}
+            className="login-form-container__submit-button"
+          >
+            Click
+          </Button>
+        )}
       </Stack>
     </Paper>
   );

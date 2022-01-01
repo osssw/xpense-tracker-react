@@ -1,6 +1,6 @@
 import React from "react";
 import { login } from "../api/login";
-import { getToken, saveToken } from "../service/utils";
+import { getToken, saveToken, removeToken } from "../service/utils";
 
 export const AuthContext = React.createContext<AuthProvider>(
   {} as AuthProvider
@@ -9,6 +9,7 @@ export const AuthContext = React.createContext<AuthProvider>(
 interface AuthProvider {
   isAuthorized: () => boolean;
   loginUser: (userData: UserData) => Promise<void>;
+  logoutUser: () => void;
 }
 
 export type UserData = {
@@ -23,12 +24,16 @@ const AuthProvider: React.FunctionComponent = ({ children }) => {
     saveToken(data.session.accessToken);
   };
 
+  const logoutUser = () => {
+    removeToken();
+  };
+
   const isAuthorized = () => {
     return Boolean(getToken());
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthorized, loginUser }}>
+    <AuthContext.Provider value={{ isAuthorized, loginUser, logoutUser }}>
       {children}
     </AuthContext.Provider>
   );

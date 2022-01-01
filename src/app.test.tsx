@@ -1,11 +1,11 @@
 import React from "react";
 import { mount } from "enzyme";
 import * as RRD from "react-router-dom";
-import App from "./app";
+import App from "./App";
 import "./setupTests";
-import { AuthContext } from "./provider/auth";
-import ProfilePage from "./pages/profile/profilePage";
-import LoginPage from "./pages/login/loginPage";
+import { AuthContext } from "./provider/Auth";
+import ProfilePage from "./pages/profile/ProfilePage";
+import LoginPage from "./pages/login/LoginPage";
 
 describe("Routing", () => {
   beforeEach(() => {
