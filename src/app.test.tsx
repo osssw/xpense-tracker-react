@@ -23,6 +23,7 @@ describe("Routing", () => {
           value={{
             isAuthorized: () => true,
             loginUser: () => Promise.reject(),
+            logoutUser: () => Promise.reject(),
           }}
         >
           <App />
@@ -40,6 +41,7 @@ describe("Routing", () => {
           value={{
             isAuthorized: () => false,
             loginUser: () => Promise.reject(),
+            logoutUser: () => Promise.reject(),
           }}
         >
           <App />
@@ -57,6 +59,7 @@ describe("Routing", () => {
           value={{
             isAuthorized: () => false,
             loginUser: () => Promise.reject(),
+            logoutUser: () => Promise.reject(),
           }}
         >
           <App />
