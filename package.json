@@ -2,7 +2,7 @@
   "name": "xpense-tracker-react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://xpense-tracker.github.io/xpense-tracker-react",
+  "homepage": "https://xpense-tracker.github.io",
   "dependencies": {
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",

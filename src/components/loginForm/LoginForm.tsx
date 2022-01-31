@@ -3,7 +3,9 @@ import Stack from "@mui/material/Stack";
 import { Button, LinearProgress, Paper, TextField } from "@mui/material";
 import { AuthContext } from "../../provider/Auth";
 import { useNavigate } from "react-router-dom";
+import Error from "../common/error/Error";
 import "./loginForm.scss";
+import ContainedButton from "../common/button/Button";
 
 const LoginForm: React.FunctionComponent = () => {
   const { loginUser } = React.useContext(AuthContext);
@@ -12,12 +14,15 @@ const LoginForm: React.FunctionComponent = () => {
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const [isLoading, setLoading] = React.useState<boolean>(false);
+  const [isError, setError] = React.useState<boolean>(false);
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setError(false);
     setEmail(event.target.value);
   };
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setError(false);
     setPassword(event.target.value);
   };
 
@@ -31,6 +36,7 @@ const LoginForm: React.FunctionComponent = () => {
       navigate("/profile");
     } catch (error) {
       console.error(error);
+      setError(true);
     }
     setLoading(false);
   };
@@ -53,13 +59,9 @@ const LoginForm: React.FunctionComponent = () => {
         {isLoading ? (
           <LinearProgress />
         ) : (
-          <Button
-            variant="contained"
-            onClick={handleFormSubmit}
-            className="login-form-container__submit-button"
-          >
-            Click
-          </Button>
+          <ContainedButton onClick={handleFormSubmit}>Click</ContainedButton>
+        )}
+        {isError && <Error text="Wrong email or password" />}
         )}
       </Stack>
     </Paper>
