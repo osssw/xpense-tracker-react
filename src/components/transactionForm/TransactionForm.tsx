@@ -1,6 +1,8 @@
 import React from "react";
 import Stack from "@mui/material/Stack";
 import {
+  FormControl,
+  InputLabel,
   LinearProgress,
   MenuItem,
   Select,
@@ -11,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import Error from "../common/error/Error";
 import ContainedButton from "../common/button/Button";
 import { Category, TransactionContext } from "../../provider/Transaction";
+import "./transactionForm.scss";
 
 const TransactionForm: React.FunctionComponent = () => {
   const { saveTransaction, getAllCategories } =
@@ -62,18 +65,24 @@ const TransactionForm: React.FunctionComponent = () => {
         type="number"
         required={true}
       />
-      <Select
-        label="Category"
-        value={chosenCategory}
-        onChange={handleCategoryChange}
-        required={true}
-      >
-        {categories?.map((category) => (
-          <MenuItem key={category.id} value={category.id}>
-            {category.title}
-          </MenuItem>
-        ))}
-      </Select>
+      <FormControl>
+        <InputLabel id="transaction-category" className="category-label">
+          Category
+        </InputLabel>
+        <Select
+          label="Category"
+          labelId="transaction-category"
+          value={chosenCategory}
+          onChange={handleCategoryChange}
+          required={true}
+        >
+          {categories?.map((category) => (
+            <MenuItem key={category.id} value={category.id}>
+              {category.title}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       {isLoading ? (
         <LinearProgress />
       ) : (
