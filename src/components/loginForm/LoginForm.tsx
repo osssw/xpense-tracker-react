@@ -1,6 +1,6 @@
 import React from "react";
 import Stack from "@mui/material/Stack";
-import { LinearProgress, Paper, TextField } from "@mui/material";
+import { Button, LinearProgress, Paper, TextField } from "@mui/material";
 import { AuthContext } from "../../provider/Auth";
 import { useNavigate } from "react-router-dom";
 import Error from "../common/error/Error";
@@ -62,6 +62,7 @@ const LoginForm: React.FunctionComponent = () => {
           <ContainedButton onClick={handleFormSubmit}>Click</ContainedButton>
         )}
         {isError && <Error text="Wrong email or password" />}
+        )}
       </Stack>
     </Paper>
   );
