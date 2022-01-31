@@ -1,35 +1,68 @@
 import React from "react";
-import AppBar from "@mui/material/AppBar";
-import { Box, Container, IconButton, Typography } from "@mui/material";
-import Toolbar from "@mui/material/Toolbar";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import "./profilePage.scss";
-import { AuthContext } from "../../provider/Auth";
+import { Box, Button, Container, Paper } from "@mui/material";
+import Navbar from "../../components/navbar/Navbar";
 import { useNavigate } from "react-router-dom";
+import {
+  Category,
+  Transaction,
+  TransactionContext,
+} from "../../provider/Transaction";
+import "./profilePage.scss";
 
 const ProfilePage: React.FunctionComponent = () => {
-  const { logoutUser } = React.useContext(AuthContext);
   const navigate = useNavigate();
+  const { getAllTransactions, getAllCategories } =
+    React.useContext(TransactionContext);
+  const [transactions, setTransactions] = React.useState<Transaction[]>();
+  const [categories, setCategories] = React.useState<Category[]>();
 
-  const handleLogout = () => {
-    logoutUser();
-    navigate("/");
+  React.useEffect(() => {
+    getAllTransactions().then((allTransactions) => {
+      setTransactions(allTransactions);
+    });
+    getAllCategories().then((allCategories) => {
+      setCategories(allCategories);
+    });
+  }, []);
+
+  const handleAddTransactionClick = () => {
+    navigate("/add_transaction");
   };
 
   return (
     <div className="profile-page">
-      <AppBar position="fixed">
-        <Toolbar className="profile-page__toolbar">
-          <Typography variant="h6" component="div">
-            XPENSE TRACKER
-          </Typography>
-          <IconButton onClick={handleLogout}>
-            <ExitToAppIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+      <Navbar />
       <Container>
-        <Box sx={{ mt: 10 }}>text</Box>
+        <Box sx={{ mt: 10, mb: 10 }}>
+          {transactions?.map((transaction) => (
+            <Paper
+              key={transaction.id}
+              elevation={3}
+              className="profile-page__transaction-card"
+            >
+              <div className="profile-page__transaction-card__amount">
+                Amount: {transaction.amount} RUB
+              </div>
+              <div>
+                Category:{" "}
+                {
+                  categories?.find(
+                    (category) => category.id === transaction.categoryId
+                  )?.title
+                }
+              </div>
+            </Paper>
+          ))}
+          <Box sx={{ mx: "auto" }}>
+            <Button
+              onClick={handleAddTransactionClick}
+              className="profile-page__add-button"
+              variant="contained"
+            >
+              Add transaction
+            </Button>
+          </Box>
+        </Box>
       </Container>
     </div>
   );

@@ -1,9 +1,18 @@
 .profile-page {
-  &__logout-button {
-    color: white !important;
+  &__transaction-card {
+    padding: 12px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+
+    &__amount {
+      margin-bottom: 12px;
+    }
   }
 
-  &__toolbar {
-    justify-content: space-between;
+  &__add-button {
+    position: fixed !important;
+    bottom: 16px;
+    height: 48px;
+    width: 312px;
   }
 }

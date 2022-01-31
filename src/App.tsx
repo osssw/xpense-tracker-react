@@ -2,6 +2,7 @@ import { Container } from "@mui/material";
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import AddTransactionPage from "./pages/addTransaction/AddTransactionPage";
 import LoginPage from "./pages/login/LoginPage";
 import NotFoundPage from "./pages/notFound/NotFoundPage";
 import ProfilePage from "./pages/profile/ProfilePage";
@@ -25,6 +26,14 @@ const App: React.FunctionComponent = () => {
             element={
               <RequireAuth>
                 <ProfilePage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="add_transaction"
+            element={
+              <RequireAuth>
+                  <AddTransactionPage />
               </RequireAuth>
             }
           />

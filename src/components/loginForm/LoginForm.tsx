@@ -59,7 +59,7 @@ const LoginForm: React.FunctionComponent = () => {
         {isLoading ? (
           <LinearProgress />
         ) : (
-          <ContainedButton onClick={handleFormSubmit}>Click</ContainedButton>
+          <ContainedButton onClick={handleFormSubmit}>Log in</ContainedButton>
         )}
         {isError && <Error text="Wrong email or password" />}
       </Stack>

@@ -6,11 +6,14 @@ import reportWebVitals from "./reportWebVitals";
 
 import "./index.scss";
 import AuthProvider from "./provider/Auth";
+import TransactionProvider from "./provider/Transaction";
 
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
-      <App />
+      <TransactionProvider>
+        <App />
+      </TransactionProvider>
     </AuthProvider>
   </React.StrictMode>,
   document.getElementById("root")
