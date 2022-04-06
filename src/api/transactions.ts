@@ -1,6 +1,5 @@
-import axios from "axios";
-import { getToken } from "../service/utils";
 import { apiUrl } from "./api";
+import axiosConfig from "./axiosConfig";
 
 export type TransactionPostData = {
   amount: number;
@@ -19,28 +18,16 @@ export type TransactionsResponseData = {
 };
 
 export const postTransaction = (transaction: TransactionPostData) => {
-  return axios.post(
-    `${apiUrl}/transactions`,
-    {
-      amount_cents: transaction.amount * 100,
-      amount_currency: "RUB",
-      category_id: transaction.categoryId,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    }
-  );
+  return axiosConfig.post(`${apiUrl}/transactions`, {
+    amount_cents: transaction.amount * 100,
+    amount_currency: "RUB",
+    category_id: transaction.categoryId,
+  });
 };
 
 export const getTransactions = () => {
-  return axios
-    .get<TransactionsResponseData>(`${apiUrl}/transactions`, {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    })
+  return axiosConfig
+    .get<TransactionsResponseData>(`${apiUrl}/transactions`)
     .then((response) =>
       response.data.transactions.map((transaction) => ({
         amount: transaction.amount_cents / 100,

@@ -18,7 +18,7 @@ const App: React.FunctionComponent = () => {
           <Route
             path="/"
             element={
-              !isAuthorized() ? <LoginPage /> : <Navigate to="/profile" />
+              !isAuthorized ? <LoginPage /> : <Navigate to="/profile" />
             }
           />
           <Route
@@ -33,7 +33,7 @@ const App: React.FunctionComponent = () => {
             path="add_transaction"
             element={
               <RequireAuth>
-                  <AddTransactionPage />
+                <AddTransactionPage />
               </RequireAuth>
             }
           />
@@ -45,7 +45,7 @@ const App: React.FunctionComponent = () => {
 
 const RequireAuth: React.FunctionComponent = ({ children }) => {
   const { isAuthorized } = React.useContext(AuthContext);
-  return <>{isAuthorized() ? children : <Navigate to="/" />}</>;
+  return <>{isAuthorized ? children : <Navigate to="/" />}</>;
 };
 
 export default App;

@@ -7,7 +7,7 @@ export const AuthContext = React.createContext<AuthProvider>(
 );
 
 interface AuthProvider {
-  isAuthorized: () => boolean;
+  isAuthorized: boolean;
   loginUser: (userData: UserData) => Promise<void>;
   logoutUser: () => void;
 }
@@ -18,18 +18,20 @@ export type UserData = {
 };
 
 const AuthProvider: React.FunctionComponent = ({ children }) => {
+  const [isAuthorized, setAuthorized] = React.useState<boolean>(
+    Boolean(getToken())
+  );
+
   const loginUser = async (userData: UserData) => {
     const response = await login(userData);
     const data = response.data;
     saveToken(data.session.accessToken);
+    setAuthorized(true);
   };
 
   const logoutUser = () => {
     removeToken();
-  };
-
-  const isAuthorized = () => {
-    return Boolean(getToken());
+    setAuthorized(false);
   };
 
   return (

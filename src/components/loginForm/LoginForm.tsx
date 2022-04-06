@@ -37,8 +37,8 @@ const LoginForm: React.FunctionComponent = () => {
     } catch (error) {
       console.error(error);
       setError(true);
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
