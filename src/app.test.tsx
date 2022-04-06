@@ -6,6 +6,7 @@ import "./setupTests";
 import { AuthContext } from "./provider/Auth";
 import ProfilePage from "./pages/profile/ProfilePage";
 import LoginPage from "./pages/login/LoginPage";
+import TransactionProvider from "./provider/Transaction";
 
 describe("Routing", () => {
   beforeEach(() => {
@@ -21,12 +22,14 @@ describe("Routing", () => {
       <RRD.MemoryRouter initialEntries={["/"]}>
         <AuthContext.Provider
           value={{
-            isAuthorized: () => true,
+            isAuthorized: true,
             loginUser: () => Promise.reject(),
             logoutUser: () => Promise.reject(),
           }}
         >
-          <App />
+          <TransactionProvider>
+            <App />
+          </TransactionProvider>
         </AuthContext.Provider>
       </RRD.MemoryRouter>
     );
@@ -39,7 +42,7 @@ describe("Routing", () => {
       <RRD.MemoryRouter initialEntries={["/"]}>
         <AuthContext.Provider
           value={{
-            isAuthorized: () => false,
+            isAuthorized: false,
             loginUser: () => Promise.reject(),
             logoutUser: () => Promise.reject(),
           }}
@@ -57,7 +60,7 @@ describe("Routing", () => {
       <RRD.MemoryRouter initialEntries={["/profile"]}>
         <AuthContext.Provider
           value={{
-            isAuthorized: () => false,
+            isAuthorized: false,
             loginUser: () => Promise.reject(),
             logoutUser: () => Promise.reject(),
           }}

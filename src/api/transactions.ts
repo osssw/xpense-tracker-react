@@ -1,3 +1,4 @@
+import { Transaction } from "../provider/Transaction";
 import { apiUrl } from "./api";
 import axiosConfig from "./axiosConfig";
 
@@ -25,7 +26,7 @@ export const postTransaction = (transaction: TransactionPostData) => {
   });
 };
 
-export const getTransactions = () => {
+export const getTransactions = (): Promise<Transaction[]> => {
   return axiosConfig
     .get<TransactionsResponseData>(`${apiUrl}/transactions`)
     .then((response) =>
