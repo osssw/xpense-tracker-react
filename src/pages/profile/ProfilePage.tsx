@@ -1,19 +1,20 @@
 import React from "react";
-import { Box, Button, Container, Paper } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import Navbar from "../../components/navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import {
   Category,
-  Transaction,
+  Transaction as TransactionType,
   TransactionContext,
 } from "../../provider/Transaction";
 import "./profilePage.scss";
+import Transaction from "../../components/transaction/Transcation";
 
 const ProfilePage: React.FunctionComponent = () => {
   const navigate = useNavigate();
   const { getAllTransactions, getAllCategories } =
     React.useContext(TransactionContext);
-  const [transactions, setTransactions] = React.useState<Transaction[]>();
+  const [transactions, setTransactions] = React.useState<TransactionType[]>();
   const [categories, setCategories] = React.useState<Category[]>();
 
   React.useEffect(() => {
@@ -35,23 +36,16 @@ const ProfilePage: React.FunctionComponent = () => {
       <Container>
         <Box sx={{ mt: 10, mb: 10 }}>
           {transactions?.map((transaction) => (
-            <Paper
+            <Transaction
               key={transaction.id}
-              elevation={3}
-              className="profile-page__transaction-card"
-            >
-              <div className="profile-page__transaction-card__amount">
-                Amount: {transaction.amount} RUB
-              </div>
-              <div>
-                Category:{" "}
-                {
+              transaction={{
+                ...transaction,
+                title:
                   categories?.find(
                     (category) => category.id === transaction.categoryId
-                  )?.title
-                }
-              </div>
-            </Paper>
+                  )?.title || "",
+              }}
+            />
           ))}
           <Box sx={{ mx: "auto" }}>
             <Button

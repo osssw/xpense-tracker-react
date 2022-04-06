@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import { Transaction } from "../provider/Transaction";
 import { apiUrl } from "./api";
 import axiosConfig from "./axiosConfig";
@@ -18,7 +19,9 @@ export type TransactionsResponseData = {
   transactions: TransactionResponseData[];
 };
 
-export const postTransaction = (transaction: TransactionPostData) => {
+export const postTransaction = (
+  transaction: TransactionPostData
+): Promise<AxiosResponse<any, any>> => {
   return axiosConfig.post(`${apiUrl}/transactions`, {
     amount_cents: transaction.amount * 100,
     amount_currency: "RUB",

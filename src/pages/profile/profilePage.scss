@@ -1,14 +1,4 @@
 .profile-page {
-  &__transaction-card {
-    padding: 12px;
-    margin-top: 12px;
-    margin-bottom: 12px;
-
-    &__amount {
-      margin-bottom: 12px;
-    }
-  }
-
   &__add-button {
     position: fixed !important;
     bottom: 16px;
