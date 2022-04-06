@@ -1,8 +1,9 @@
 import React from "react";
 import AppBar from "@mui/material/AppBar";
-import { IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import AddIcon from "@mui/icons-material/Add";
 import "./navbar.scss";
 import { AuthContext } from "../../provider/Auth";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +21,10 @@ const Navbar: React.FunctionComponent = () => {
     navigate("/profile");
   };
 
+  const handleAddTransactionClick = () => {
+    navigate("/add_transaction");
+  };
+
   return (
     <AppBar position="fixed" className="navbar">
       <Toolbar className="navbar__toolbar">
@@ -31,9 +36,14 @@ const Navbar: React.FunctionComponent = () => {
         >
           XPENSE TRACKER
         </Typography>
-        <IconButton onClick={handleLogout}>
-          <ExitToAppIcon />
-        </IconButton>
+        <Box>
+          <IconButton onClick={handleAddTransactionClick}>
+            <AddIcon />
+          </IconButton>
+          <IconButton onClick={handleLogout}>
+            <ExitToAppIcon />
+          </IconButton>
+        </Box>
       </Toolbar>
     </AppBar>
   );

@@ -1,17 +1,13 @@
 import React from "react";
-import { Box, Button, Container } from "@mui/material";
-import Navbar from "../../components/navbar/Navbar";
-import { useNavigate } from "react-router-dom";
+import { Box, Container } from "@mui/material";
 import {
   Category,
   Transaction as TransactionType,
   TransactionContext,
 } from "../../provider/Transaction";
-import "./profilePage.scss";
 import Transaction from "../../components/transaction/Transcation";
 
 const ProfilePage: React.FunctionComponent = () => {
-  const navigate = useNavigate();
   const { getAllTransactions, getAllCategories } =
     React.useContext(TransactionContext);
   const [transactions, setTransactions] = React.useState<TransactionType[]>();
@@ -26,39 +22,23 @@ const ProfilePage: React.FunctionComponent = () => {
     });
   }, []);
 
-  const handleAddTransactionClick = () => {
-    navigate("/add_transaction");
-  };
-
   return (
-    <div className="profile-page">
-      <Navbar />
-      <Container>
-        <Box sx={{ mt: 10, mb: 10 }}>
-          {transactions?.map((transaction) => (
-            <Transaction
-              key={transaction.id}
-              transaction={{
-                ...transaction,
-                title:
-                  categories?.find(
-                    (category) => category.id === transaction.categoryId
-                  )?.title || "",
-              }}
-            />
-          ))}
-          <Box sx={{ mx: "auto" }}>
-            <Button
-              onClick={handleAddTransactionClick}
-              className="profile-page__add-button"
-              variant="contained"
-            >
-              Add transaction
-            </Button>
-          </Box>
-        </Box>
-      </Container>
-    </div>
+    <Container sx={{ p: 0 }} className="profile-page">
+      <Box sx={{ mt: 10 }}>
+        {transactions?.map((transaction) => (
+          <Transaction
+            key={transaction.id}
+            transaction={{
+              ...transaction,
+              title:
+                categories?.find(
+                  (category) => category.id === transaction.categoryId
+                )?.title || "",
+            }}
+          />
+        ))}
+      </Box>
+    </Container>
   );
 };
 

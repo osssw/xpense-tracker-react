@@ -2,6 +2,7 @@ import { Container } from "@mui/material";
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Navbar from "./components/navbar/Navbar";
 import AddTransactionPage from "./pages/addTransaction/AddTransactionPage";
 import LoginPage from "./pages/login/LoginPage";
 import NotFoundPage from "./pages/notFound/NotFoundPage";
@@ -17,9 +18,7 @@ const App: React.FunctionComponent = () => {
           <Route path="*" element={<NotFoundPage />} />
           <Route
             path="/"
-            element={
-              !isAuthorized ? <LoginPage /> : <Navigate to="/profile" />
-            }
+            element={!isAuthorized ? <LoginPage /> : <Navigate to="/profile" />}
           />
           <Route
             path="/profile"
@@ -45,7 +44,18 @@ const App: React.FunctionComponent = () => {
 
 const RequireAuth: React.FunctionComponent = ({ children }) => {
   const { isAuthorized } = React.useContext(AuthContext);
-  return <>{isAuthorized ? children : <Navigate to="/" />}</>;
+  return (
+    <>
+      {isAuthorized ? (
+        <>
+          <Navbar />
+          {children}
+        </>
+      ) : (
+        <Navigate to="/" />
+      )}
+    </>
+  );
 };
 
 export default App;

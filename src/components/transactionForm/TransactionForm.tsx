@@ -14,20 +14,19 @@ import Error from "../common/error/Error";
 import ContainedButton from "../common/button/Button";
 import { Category, TransactionContext } from "../../provider/Transaction";
 import "./transactionForm.scss";
+import { getErrorString } from "../../service/error";
 
-const TransactionForm: React.FunctionComponent = () => {
-  const { saveTransaction, getAllCategories } =
-    React.useContext(TransactionContext);
+type Props = {
+  categories: Category[];
+};
+
+const TransactionForm: React.FunctionComponent<Props> = ({ categories }) => {
+  const { saveTransaction } = React.useContext(TransactionContext);
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    getAllCategories().then((categories) => setCategories(categories));
-  }, []);
-
-  const [amount, setAmount] = React.useState<string>("");
+  const [amount, setAmount] = React.useState<string>("0");
   const [isLoading, setLoading] = React.useState<boolean>(false);
-  const [isError, setError] = React.useState<boolean>(false);
-  const [categories, setCategories] = React.useState<Category[]>();
+  const [error, setError] = React.useState<string>("");
   const [chosenCategory, setChosenCategory] = React.useState<string>("");
 
   const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +34,7 @@ const TransactionForm: React.FunctionComponent = () => {
   };
 
   const handleCategoryChange = (event: SelectChangeEvent<string>) => {
+    setError("");
     setChosenCategory(event.target.value);
   };
 
@@ -50,10 +50,14 @@ const TransactionForm: React.FunctionComponent = () => {
       });
       navigate("/profile");
     } catch (error) {
-      console.error(error);
-      setError(true);
+      const errors = error.response.data.transaction.errors;
+      console.log(Object.values(errors));
+      if (errors) {
+        const errorString = getErrorString(errors);
+        setError(errorString);
+      }
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -88,7 +92,7 @@ const TransactionForm: React.FunctionComponent = () => {
       ) : (
         <ContainedButton onClick={handleFormSubmit}>Save</ContainedButton>
       )}
-      {isError && <Error text="Something went wrong" />}
+      {error && <Error text={error} />}
     </Stack>
   );
 };

@@ -12,7 +12,7 @@ type Props = {
 
 const Transaction: React.FunctionComponent<Props> = ({ transaction }) => {
   return (
-    <Paper key={transaction.id} elevation={3} className="transaction-card">
+    <Paper elevation={3} className="transaction-card">
       <div className="transaction-card__amount">
         Amount: {transaction.amount} RUB
       </div>
