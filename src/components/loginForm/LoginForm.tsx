@@ -1,6 +1,6 @@
 import React from "react";
 import Stack from "@mui/material/Stack";
-import { Button, LinearProgress, Paper, TextField } from "@mui/material";
+import { LinearProgress, Paper, TextField } from "@mui/material";
 import { AuthContext } from "../../provider/Auth";
 import { useNavigate } from "react-router-dom";
 import Error from "../common/error/Error";
@@ -37,8 +37,8 @@ const LoginForm: React.FunctionComponent = () => {
     } catch (error) {
       console.error(error);
       setError(true);
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -59,10 +59,9 @@ const LoginForm: React.FunctionComponent = () => {
         {isLoading ? (
           <LinearProgress />
         ) : (
-          <ContainedButton onClick={handleFormSubmit}>Click</ContainedButton>
+          <ContainedButton onClick={handleFormSubmit}>Log in</ContainedButton>
         )}
         {isError && <Error text="Wrong email or password" />}
-        )}
       </Stack>
     </Paper>
   );

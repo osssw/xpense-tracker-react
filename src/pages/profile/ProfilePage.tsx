@@ -1,37 +1,44 @@
 import React from "react";
-import AppBar from "@mui/material/AppBar";
-import { Box, Container, IconButton, Typography } from "@mui/material";
-import Toolbar from "@mui/material/Toolbar";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import "./profilePage.scss";
-import { AuthContext } from "../../provider/Auth";
-import { useNavigate } from "react-router-dom";
+import { Box, Container } from "@mui/material";
+import {
+  Category,
+  Transaction as TransactionType,
+  TransactionContext,
+} from "../../provider/Transaction";
+import Transaction from "../../components/transaction/Transcation";
 
 const ProfilePage: React.FunctionComponent = () => {
-  const { logoutUser } = React.useContext(AuthContext);
-  const navigate = useNavigate();
+  const { getAllTransactions, getAllCategories } =
+    React.useContext(TransactionContext);
+  const [transactions, setTransactions] = React.useState<TransactionType[]>();
+  const [categories, setCategories] = React.useState<Category[]>();
 
-  const handleLogout = () => {
-    logoutUser();
-    navigate("/");
-  };
+  React.useEffect(() => {
+    getAllTransactions().then((allTransactions) => {
+      setTransactions(allTransactions);
+    });
+    getAllCategories().then((allCategories) => {
+      setCategories(allCategories);
+    });
+  }, []);
 
   return (
-    <div className="profile-page">
-      <AppBar position="fixed">
-        <Toolbar className="profile-page__toolbar">
-          <Typography variant="h6" component="div">
-            XPENSE TRACKER
-          </Typography>
-          <IconButton onClick={handleLogout}>
-            <ExitToAppIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Container>
-        <Box sx={{ mt: 10 }}>text</Box>
-      </Container>
-    </div>
+    <Container sx={{ p: 0 }} className="profile-page">
+      <Box sx={{ mt: 10 }}>
+        {transactions?.map((transaction) => (
+          <Transaction
+            key={transaction.id}
+            transaction={{
+              ...transaction,
+              title:
+                categories?.find(
+                  (category) => category.id === transaction.categoryId
+                )?.title || "",
+            }}
+          />
+        ))}
+      </Box>
+    </Container>
   );
 };
 
